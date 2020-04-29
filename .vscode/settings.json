@@ -1,0 +1,15 @@
+{
+    "eslint.enable": true,
+    "eslint.validate": [
+        "typescript",
+        "typescriptreact",
+        "vue",
+        {
+            "language": "vue",
+            "autoFix": false
+        }
+    ],
+    "editor.tabSize": 2,
+    "prettier.singleQuote": true,
+    "aiXcoder.localShowIncompleteSuggestions": false,
+}
