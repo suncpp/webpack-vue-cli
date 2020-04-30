@@ -8,6 +8,7 @@
 import Vue from 'vue';
 import App from './app.vue';
 import './elementui/index';
+import './components/index';
 
 
 // 引入路由

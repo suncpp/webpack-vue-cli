@@ -7,20 +7,18 @@
  -->
 
 <template>
-  <div class="test">
-    <span>绿色</span>
-    {{ test }}
-    <el-button>默认按钮</el-button>
-    <el-button type="primary">主要按钮</el-button>
-    <el-button type="success">成功按钮</el-button>
-    <el-button type="info">信息按钮</el-button>
-    <el-button type="warning">警告按钮</el-button>
-    <el-button type="danger">危险按钮</el-button>
+  <div>
+    <test> </test>
   </div>
 </template>
 
 <script>
+import test from './views/test';
+
 export default {
+  components: {
+    test
+  },
   data() {
     return {
       test: '简单构建vue脚手架项目'
