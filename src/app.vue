@@ -1,12 +1,12 @@
 <!--
  * @Author: caopengpeng
  * @Date: 2020-04-25 16:08:54
- * @LastEditors: caopengpeng
- * @LastEditTime: 2020-04-25 17:04:20
+ * @LastEditors: caopengepng
+ * @LastEditTime: 2020-04-30 10:00:06
  * @Description: 文件描述
  -->
 
-<template lang="html">
+<template>
   <div class="test">
     <span>绿色</span>
     {{ test }}
@@ -36,5 +36,7 @@ export default {
 </script>
 
 <style lang="less">
-
+  .test{
+    color: red;
+  }
 </style>

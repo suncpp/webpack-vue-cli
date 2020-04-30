@@ -7,12 +7,14 @@
  */
 import Vue from 'vue';
 import App from './app.vue';
-import { Button, Select } from 'element-ui';
+import './elementui/index';
 
-Vue.component(Button.name, Button);
-Vue.component(Select.name, Select);
+
+// 引入路由
+import router from "./router/index";   // import router 的router 一定要小写， 不要写成Router, 否则报can't match的报错
 
 new Vue({
     el: '#app',
+    router,
     render: h => h(App)
-})
+});
