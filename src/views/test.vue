@@ -1,20 +1,40 @@
 <template>
   <div>
-    <publicForm
+    <!-- <publicForm
       :formdescObj="formdescObj"
       :formModel="formModel"
       :rules="rules"
       ref="form"
-    />
+    >
+      <template v-slot:form-vslot>
+        <div>
+          <el-link href="https://element.eleme.io" target="_blank"
+            >默认链接</el-link
+          >
+          <el-link type="primary">主要链接</el-link>
+          <el-link type="success">成功链接</el-link>
+          <el-link type="warning">警告链接</el-link>
+          <el-link type="danger">危险链接</el-link>
+          <el-link type="info">信息链接</el-link>
+        </div>
+      </template>
+    </publicForm>
     <el-button @click="submitForm"> 提交 </el-button>
-    <el-button @click="resetForm"> 重置 </el-button>
+    <el-button @click="resetForm"> 重置 </el-button> -->
+    <publicTable></publicTable>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
+      input: '',
       formdescObj: [
+        {
+          type: 'slot',
+          prop: 'vslot',
+          isShow: true
+        },
         {
           label: '名称',
           prop: 'region',
@@ -121,4 +141,37 @@ export default {
     },
   },
 };
+</script>
+<script>
+  // isShow
+  /* isShow
+  1、可以是一个函数
+    {label: '名称', value: 'name', show: data => {
+        return data.type === 'userInfo'
+    }}
+  2、可以批量控制，配合watch
+    // 根据弹窗类型做数据联动
+    'dialogInfo.type' (val) {
+      const fieldList = this.formInfo.fieldList
+      switch (val) {
+        case 'userInfo':
+          fieldList.forEach(item => {
+            if (['user_old_pwd', 'user_new_pwd', 'user_new1_pwd'].includes(item.value)) {
+              item.show = true
+            } else {
+              item.show = false
+            }
+          })
+          break
+        case 'password':
+          fieldList.forEach(item => {
+            if (!['user_old_pwd', 'user_new_pwd', 'user_new1_pwd'].includes(item.value)) {
+              item.show = true
+            } else {
+              item.show = false
+            }
+          })
+          break
+      }
+    } */
 </script>

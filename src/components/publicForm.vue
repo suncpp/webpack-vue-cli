@@ -13,6 +13,11 @@
         :label="item.label"
         :prop="item.prop"
       >
+        <!-- solt -->
+        <template v-if="item.type === 'slot'">
+          <slot :name="'form-' + item.prop"></slot>
+        </template>
+
         <el-input
           v-if="item.type == undefined || item.type == 'text'"
           v-model="defaultValue[item.prop]"
@@ -43,13 +48,25 @@
           :clearable="item.clearable"
         />
 
-        <el-input-number
+        <!-- <el-input-number
           v-if="item.type == 'number'"
           v-model="defaultValue[item.prop]"
           controls-position="right"
           :min="item.min ? item.min : 1"
           :max="item.max ? item.max : 10"
-        ></el-input-number>
+        ></el-input-number> -->
+
+        <el-input
+          v-if="item.type == 'number'"
+          type="number"
+          v-model="defaultValue[item.prop]"
+          :disabled="item.disabled ? item.disabled : disabled"
+          :placeholder="item.placeholder ? item.placeholder : '请输入内容'"
+          v-show="item.isShow == undefined ? isShow : item.isShow"
+          :clearable="item.clearable"
+          :min="item.min ? item.min : 1"
+          :max="item.max ? item.max : 10"
+        />
 
         <el-select
           v-if="item.type == 'select'"
@@ -70,70 +87,52 @@
           </el-option>
         </el-select>
 
+        <el-select
+          v-if="item.type == 'select' && item.remote"
+          v-model="defaultValue[item.prop]"
+          remote
+          filterable
+          :placeholder="item.placeholder ? item.placeholder : '请输入关键词'"
+          :remote-method="item.event"
+        >
+          <!-- @change="handleEvent(item.event, data[item.value])" -->
+          <el-option
+            v-for="option in item.list"
+            :key="defaultValue.value ? item[defaultValue.value] : option.value"
+            :label="
+              defaultValue.label ? item[defaultValue.label] : option.label
+            "
+            :value="
+              defaultValue.value ? item[defaultValue.value] : option.value
+            "
+          >
+          </el-option>
+        </el-select>
+
         <el-switch
           v-if="item.type == 'switch'"
           v-model="defaultValue[item.prop]"
-          :active-color="item.swtchColorAndText ? item.swtchColorAndText.activecolor : '#13ce66'"
-          :inactive-color="item.swtchColorAndText ? item.swtchColorAndText.inactivecolor  : '#ff4949'"
-          :active-text="item.swtchColorAndText ? item.swtchColorAndText.activetext  : '启动'"
-          :inactive-text="item.swtchColorAndText ? item.swtchColorAndText.inactivetext  : '关闭'"
+          :active-color="
+            item.swtchColorAndText
+              ? item.swtchColorAndText.activecolor
+              : '#13ce66'
+          "
+          :inactive-color="
+            item.swtchColorAndText
+              ? item.swtchColorAndText.inactivecolor
+              : '#ff4949'
+          "
+          :active-text="
+            item.swtchColorAndText ? item.swtchColorAndText.activetext : '启动'
+          "
+          :inactive-text="
+            item.swtchColorAndText
+              ? item.swtchColorAndText.inactivetext
+              : '关闭'
+          "
         >
         </el-switch>
       </el-form-item>
-      <!-- <el-form-item label="活动区域" prop="region">
-        <el-select v-model="ruleForm.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="活动时间" required>
-        <el-col :span="11">
-          <el-form-item prop="date1">
-            <el-date-picker
-              type="date"
-              placeholder="选择日期"
-              v-model="ruleForm.date1"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-form-item prop="date2">
-            <el-time-picker
-              placeholder="选择时间"
-              v-model="ruleForm.date2"
-              style="width: 100%;"
-            ></el-time-picker>
-          </el-form-item>
-        </el-col>
-      </el-form-item>
-      <el-form-item label="即时配送" prop="delivery">
-        <el-switch v-model="ruleForm.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质" prop="type">
-        <el-checkbox-group v-model="ruleForm.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源" prop="resource">
-        <el-radio-group v-model="ruleForm.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式" prop="desc">
-        <el-input type="textarea" v-model="ruleForm.desc"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')"
-          >立即创建</el-button
-        >
-        <el-button @click="resetForm('ruleForm')">重置</el-button>
-      </el-form-item> -->
     </el-form>
   </div>
 </template>
@@ -161,10 +160,10 @@ export default {
     this.defaultValue = this.formModel;
   },
   watch: {
-    'formModel': (v) => {
+    formModel: (v) => {
       this.defaultValue = v;
     },
-    'formdescObj': {
+    formdescObj: {
       handler: () => {
         this.formKey += 1;
       },
@@ -191,6 +190,11 @@ export default {
     resetForm() {
       this.$refs.publicForm.resetFields();
     },
+
+     // 绑定的相关事件
+    // handleEvent (evnet) {
+    //   this.$emit('handleEvent', evnet);
+    // }
   },
 };
 </script>

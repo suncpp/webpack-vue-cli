@@ -1,8 +1,12 @@
 import Vue from 'vue';
 import publicForm from './publicForm.vue';
+import pagintion from './pagintion.vue';
+import publicTable from './publicTable.vue';
 
 const comoponents = [
-  publicForm
+  publicForm,
+  pagintion,
+  publicTable
 ];
 
 comoponents.forEach(item => {
