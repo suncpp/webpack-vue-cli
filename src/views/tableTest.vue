@@ -5,8 +5,10 @@
       :tableHead="tableHead"
       :tableData="tableData"
       :options="options"
+      :isShow="isShow"
       @handleBtn="handleBtn"
-    ></publicTable>
+    >
+    </publicTable>
   </div>
 </template>
 <script>
@@ -37,28 +39,17 @@ export default {
           label: '地址',
           prop: 'address',
         },
+        {
+          label: '是否通过',
+          prop: 'isYes',
+          type: 'switch'
+        },
       ],
       tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
+        ['2016-05-02', '王小虎', '上海市普陀区金沙江路 1518 弄', true],
+        ['2016-05-02', '王小虎', '上海市普陀区金沙江路 1518 弄', false],
+        ['2016-05-02', '王小虎', '上海市普陀区金沙江路 1518 弄', true],
+        ['2016-05-02', '王小虎', '上海市普陀区金沙江路 1518 弄', false],
       ],
       options: [
         {
@@ -70,6 +61,7 @@ export default {
           // },
         },
       ],
+      isShow: ['isYes']
     };
   },
   mounted() {},

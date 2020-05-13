@@ -29,7 +29,23 @@
           :label="item.label"
           :width="item.width"
           :fixed="item.fixed"
+          v-if="!isShow.includes(item.prop)"
         >
+
+          <template slot-scope="scope">
+            <span v-if="item.type == 'switch'">
+              <el-switch
+                v-model="scope.row[index || item.prop]"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                @change="$emit('handleSwitch', scope.row)"
+              >
+              </el-switch>
+            </span>
+            <span v-else>{{
+              Array.isArray(scope.row) ? scope.row[index] : scope.row[item.prop]
+            }}</span>
+          </template>
         </el-table-column>
       </template>
 
@@ -61,31 +77,35 @@ export default {
   props: {
     tableConfig: {
       type: Object,
-      required: true
+      required: true,
     },
     tableHead: {
       type: Array,
       default: () => {
         return [];
-      }
+      },
     },
     tableData: {
       type: Array,
       default: () => {
         return [];
-      }
+      },
     },
     options: {
       type: Array,
       default: () => {
         return [];
-      }
-    }
+      },
+    },
+    isShow: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   data() {
-    return {
-     
-    };
+    return {};
   },
   methods: {
     handleBtn(btn, indx, row) {
