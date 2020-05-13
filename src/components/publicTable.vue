@@ -7,6 +7,21 @@
       :border="tableConfig.border"
       :height="tableConfig.height"
     >
+      <el-table-column
+        type="selection"
+        width="55"
+        v-if="tableConfig.isSelection"
+      >
+      </el-table-column>
+
+      <!-- 自己坑了自己一把，tableHead中用了fixed,所以index老是不对，在index加上fixed就好了 -->
+      <el-table-column
+        type="index"
+        width="50"
+        fixed="left"
+        v-if="tableConfig.isIndex"
+      />
+
       <template v-for="(item, index) in tableHead">
         <el-table-column
           :key="index"
@@ -18,6 +33,7 @@
         </el-table-column>
       </template>
 
+      <!-- 自定义按钮 -->
       <template v-if="tableConfig.isOptionsSlot">
         <slot name="slot-buttons"></slot>
       </template>
@@ -42,63 +58,33 @@
 <script>
 export default {
   name: 'publicTable',
+  props: {
+    tableConfig: {
+      type: Object,
+      required: true
+    },
+    tableHead: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    tableData: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    options: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    }
+  },
   data() {
     return {
-      tableConfig: {
-        stripe: true,
-        border: true,
-        height: '250',
-        isOptionsSlot: false,
-      },
-      tableHead: [
-        {
-          label: '日期',
-          prop: 'date',
-          width: '180',
-          fixed: true, // 或者left,right
-        },
-        {
-          label: '姓名',
-          prop: 'name',
-          width: '180',
-        },
-        {
-          label: '地址',
-          prop: 'address',
-        },
-      ],
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
-      options: [
-        {
-          type: 'success',
-          label: '通过',
-          prop: 'yes',
-          // isShow: (item) => {
-          //   return item.status == 0 ? false : true;
-          // },
-        },
-      ],
+     
     };
   },
   methods: {

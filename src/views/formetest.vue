@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <publicForm
+    <publicForm
       :formdescObj="formdescObj"
       :formModel="formModel"
       :rules="rules"
@@ -20,8 +20,7 @@
       </template>
     </publicForm>
     <el-button @click="submitForm"> 提交 </el-button>
-    <el-button @click="resetForm"> 重置 </el-button> -->
-    <publicTable></publicTable>
+    <el-button @click="resetForm"> 重置 </el-button>
   </div>
 </template>
 <script>
@@ -141,9 +140,8 @@ export default {
     },
   },
 };
-</script>
-<script>
-  // isShow
+
+// isShow
   /* isShow
   1、可以是一个函数
     {label: '名称', value: 'name', show: data => {

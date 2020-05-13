@@ -8,17 +8,13 @@
 
 <template>
   <div>
-    <test> </test>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import test from './views/test';
 
 export default {
-  components: {
-    test
-  },
   data() {
     return {
       test: '简单构建vue脚手架项目'
